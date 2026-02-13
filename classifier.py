@@ -62,8 +62,8 @@ def select_files(directory, fraction=0.7):
 if __name__ == '__main__':
     
     ############################CHANGE YOUR STUDENT ID###############################
-    student1_number = 123456789  # Replace with the actual student number
-    student2_number = 123456789  # Replace with the actual student number
+    student1_number = 1010214260  # Replace with the actual student number (Daivik Dhar)
+    student2_number = 1010380892  # Replace with the actual student number (Bharat Bhargava)
     random.seed((student1_number+student2_number)/1000)
     
     # folder for training and testing 
