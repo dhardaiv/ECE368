@@ -1,3 +1,13 @@
+# Python junk
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+
 # LaTeX build junk
 *.aux
 *.log
@@ -10,5 +20,5 @@
 *.blg
 *.xdv
 
-# VS Code settings (optional, keeps your personal settings out of the repo)
+# VS Code settings
 .vscode/
