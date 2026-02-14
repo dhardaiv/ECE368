@@ -65,9 +65,18 @@ You can complete this lab in a group of two. Please provide the name and student
 
       \begin{center}
    \framebox{
-      \vbox{\vspace{15mm}
-    \hbox to 5.5in {}
-      \vspace{25.5mm}}
+      \begin{minipage}{5.5in}
+      \vspace{0.2cm} % Small top padding
+      \textbf{Idea:} Laplace smoothing avoids zero probabilities for unseen words by adding a count of 1 to every word observation. 
+      Let $S = \{n : y_n = 1\}$ be the spam emails and $H = \{n : y_n = 0\}$ be the ham emails. The estimators are:
+      
+      \[
+      \hat{p}_d = \frac{1 + \sum_{n \in S} x_{n,d}}{D + \sum_{n \in S} \sum_{j=1}^D x_{n,j}}, \quad
+      \hat{q}_d = \frac{1 + \sum_{n \in H} x_{n,d}}{D + \sum_{n \in H} \sum_{j=1}^D x_{n,j}}
+      \]
+      \noindent where $D$ is the vocabulary size and $x_{n,d}$ is the count of word $d$ in email $n$.
+      \vspace{0.2cm} % Small bottom padding
+    \end{minipage}
    }
    \end{center}
      \item Complete function \textsf{learn\_distributions} in python file \textsf{classifier.py} based on the expressions you derived in part (a). ({\bf $1$ pt})%and upload your code to the system.
