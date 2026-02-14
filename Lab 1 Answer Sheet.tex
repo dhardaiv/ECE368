@@ -86,12 +86,25 @@ You can complete this lab in a group of two. Please provide the name and student
     \item
     Write down the MAP rule to decide whether $y=1$ or $y=0$ based on its feature vector $\mathbf{x}$ for a new email $\{\mathbf{x},y\}$. The $d$-th entry of $\mathbf{x}$ is denoted by $x_d$. Please incorporate $p_d$ and $q_d$ in your expression. Please assume that $\pi=0.5$. ({\bf $1$ pt})
      \begin{center}
-   \framebox{
-      \vbox{\vspace{35mm}
-    \hbox to 5.5in {}
-      \vspace{10.5mm}}
-   }
-   \end{center}
+  \framebox{
+    \begin{minipage}{5.5in}
+      \vspace{0.2cm}
+      The MAP decision rule compares the posterior probabilities. We decide $y=1$ if $P(y=1|\mathbf{x}) > P(y=0|\mathbf{x})$. Using Bayes' rule and the assumption that priors are equal ($\pi = 1-\pi = 0.5$), this simplifies to comparing the likelihoods:
+      
+      \[
+      P(\mathbf{x}|y=1) \underset{y=0}{\overset{y=1}{\gtrless}} P(\mathbf{x}|y=0)
+      \]
+      
+      Substituting the Multinomial model distributions and taking the natural logarithm (to prevent numerical underflow), we get the final decision rule:
+      
+      \[
+      \sum_{d=1}^D x_d \ln(p_d) \underset{y=0}{\overset{y=1}{\gtrless}} \sum_{d=1}^D x_d \ln(q_d)
+      \]
+      
+      \vspace{0.2cm}
+    \end{minipage}
+  }
+\end{center}
 
     \item Complete function \textsf{classify\_new\_email} in \textsf{classifier.py}, and test the classifier on the testing set. The number of Type $1$ errors is \framebox{\vbox{\vspace{3mm}\hbox to 10mm {}}}, and the number of Type $2$ errors is \framebox{\vbox{\vspace{3mm}\hbox to 10mm {}}}. ({\bf $1$ pt})
 
