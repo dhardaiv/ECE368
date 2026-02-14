@@ -53,7 +53,7 @@ def select_files(directory, fraction=0.7):
     This function builds a customized dataset for each group
 
     """
-    all_files = [os.path.join(directory, f) for f in os.listdir(directory) if f.endswith('.txt')]
+    all_files = sorted([os.path.join(directory, f) for f in os.listdir(directory) if f.endswith('.txt')])
     random.shuffle(all_files)
     num_files = int(len(all_files) * fraction)
     return all_files[:num_files]
