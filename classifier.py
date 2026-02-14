@@ -75,7 +75,33 @@ def classify_new_email(filename,probabilities_by_category,prior_by_category):
     representing the log posterior probabilities
     """
     ### TODO: Write your code here
+
+    words = util.get_words_in_file(filename) # list of words in the email to be classified
+
+    pd = probabilities_by_category[0] # dict for p_d, spam probs
+    qd = probabilities_by_category[1] # dict for q_d, ham probs
+
+
+    log_posterior_spam = np.log(prior_by_category[0]) # log of prior for spam ln(pi)
+    log_posterior_ham = np.log(prior_by_category[1]) # log of prior ln(1-pi)
+
+   # Loop adds the Log Likelihood (Math: sum x_d * ln(p_d))
+    for word in words:
+        # CRITICAL: Only calculate for words we have seen in training
+        if word in pd:
+            log_posterior_spam += np.log(pd[word])
+            log_posterior_ham += np.log(qd[word])
+            
+    # Decide the class (MAP Rule)
+    if log_posterior_spam > log_posterior_ham:
+        classification = 'spam'
+    else:
+        classification = 'ham'
+
+    classify_result = (classification, [log_posterior_spam, log_posterior_ham]) #tuple of classification result and log posterior probabilities
+
     
+
     
     return classify_result
 
