@@ -21,9 +21,40 @@ def learn_distributions(file_lists_by_category):
     smoothed estimates of q_d 
     """
     ### TODO: Write your code here
-    
-    
-    return probabilities_by_category
+
+    spamListFiles = file_lists_by_category[0]
+    hamListFiles = file_lists_by_category[1]
+
+
+    # Construct W and obtain frequency counts for spam and ham
+    # counts_spam[w] = how many times word w appears in all spam emails (via a dictonary)
+
+    counts_spam = util.get_word_freq(spamListFiles)
+    counts_ham = util.get_word_freq(hamListFiles)
+
+    # vocab list W
+    vocab = set(counts_spam.keys()).union(set(counts_ham.keys())) # same as W
+    D = len(vocab) # number of words in vocab list W
+
+    #calculate the Denominator for p_d and q_d (as they are always the same)
+    total_words_spam = sum(counts_spam.values())
+    total_words_ham = sum(counts_ham.values())
+
+    denomSpam = total_words_spam + D # denominator for p_d
+    denomHam = total_words_ham + D # denominator for q_d
+
+
+    #initalize the dicts for p_d and q_d (use counter to behave like dicts)
+    probabilities_by_category = (util.Counter(), util.Counter()) #   first element is for p_d, second element is for q_d
+    pd = probabilities_by_category[0] # dict for p_d
+    qd = probabilities_by_category[1] # dict for q_d
+
+    #apply lapace smoothing to calculate p_d and q_d for each word in vocab list W
+    for word in vocab:
+        pd[word] = (counts_spam[word] + 1) / denomSpam # p_d for word
+        qd[word] = (counts_ham[word] + 1) / denomHam # q_d for word
+
+    return probabilities_by_category #tuple of dicts for pd and qd per word
 
 def classify_new_email(filename,probabilities_by_category,prior_by_category):
     """
