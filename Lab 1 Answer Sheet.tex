@@ -1,0 +1,117 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.2 in}
+\setlength{\evensidemargin}{0.2in}
+\setlength{\topmargin}{-0.8 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%\usepackage{amsmath}
+%\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[tbtags]{amsmath}
+\newtheorem{thm}{Theorem}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\begin{document}
+\begin{center}
+\begin{spacing}{1.75}
+{\Large { ECE368: Probabilistic Reasoning} \\
+	{Lab 1: Classification with Multinomial and Gaussian Models}}
+\end{spacing}
+\vspace{-1em}
+\end{center}
+%\vspace{-11mm}
+You can complete this lab in a group of two. Please provide the name and student number of both members.
+%\begin{center}
+%	\framebox{
+%	\vbox{
+%	\vspace{3mm}
+%	\hbox to 6.28in { {\bf Name:
+%	\centerline{Student Number:}} }\\[5mm]
+%	\hbox to 6.28in { {\bf Name:
+%	\centerline{Student Number:}} }
+%	\vspace{3mm}}}
+%\end{center}
+\begin{center}
+	\framebox{%
+		\vbox{%
+			\vskip 3mm
+			\hbox to 6.28in{\rlap{\bf Name: Bharat Bhargava}\hfil{\bf Student Number: 1010380892}\hfil}
+			\vskip 5mm
+			\hbox to 6.28in{\rlap{\bf Name: Daivik Dhar}\hfil{\bf Student Number: 1010214260}\hfil}
+			\vskip 3mm
+		}%
+	}
+\end{center}
+
+
+{\bf You should hand in:} 1) A scanned \textsf{.pdf} version of this sheet with your answers (file size should be under $2$ MB); 2) one figure for Question {\bf 1}.2.(c) and two figures for Question {\bf 2}.1.(c) in the \textsf{.pdf} format; and 3) two Python files \textsf{classifier.py} and \textsf{ldaqda.py} that contain your code. All these files should be uploaded to Quercus.
+
+\section{Na\"{i}ve Bayes Classifier for Spam Filtering}
+\begin{enumerate}
+\item
+     \begin{enumerate}
+     \item  Write down the estimators for $p_d$ and
+	$q_d$ as functions of the training data $\{\mathbf{x}_n,y_n\}, n=1,2,\ldots,N$ using the technique of ``Laplace smoothing".  ({\bf $1$ pt})
+
+      \begin{center}
+   \framebox{
+      \vbox{\vspace{15mm}
+    \hbox to 5.5in {}
+      \vspace{25.5mm}}
+   }
+   \end{center}
+     \item Complete function \textsf{learn\_distributions} in python file \textsf{classifier.py} based on the expressions you derived in part (a). ({\bf $1$ pt})%and upload your code to the system.
+     \end{enumerate}
+\item
+    \begin{enumerate}
+    \item
+    Write down the MAP rule to decide whether $y=1$ or $y=0$ based on its feature vector $\mathbf{x}$ for a new email $\{\mathbf{x},y\}$. The $d$-th entry of $\mathbf{x}$ is denoted by $x_d$. Please incorporate $p_d$ and $q_d$ in your expression. Please assume that $\pi=0.5$. ({\bf $1$ pt})
+     \begin{center}
+   \framebox{
+      \vbox{\vspace{35mm}
+    \hbox to 5.5in {}
+      \vspace{10.5mm}}
+   }
+   \end{center}
+
+    \item Complete function \textsf{classify\_new\_email} in \textsf{classifier.py}, and test the classifier on the testing set. The number of Type $1$ errors is \framebox{\vbox{\vspace{3mm}\hbox to 10mm {}}}, and the number of Type $2$ errors is \framebox{\vbox{\vspace{3mm}\hbox to 10mm {}}}. ({\bf $1$ pt})
+
+    \item Write down the modified decision rule in the classifier such that
+	these two types of error can be traded off. Please introduce a new parameter to achieve such a trade-off.   ({\bf $0.5$ pt})
+    \begin{center}
+   \framebox{
+      \vbox{\vspace{35mm}
+    \hbox to 5.5in {}
+      \vspace{5.5mm}}
+   }
+   \end{center}
+
+    Write your code in file \textsf{classifier.py} to implement your modified decision rule. Test it on the testing set and plot a figure to show the trade-off between Type $1$ error and Type $2$ error. In the figure, the {\it x}-axis should be the number of Type
+		$1$ errors and the {\it y}-axis should be the number of Type $2$
+		errors. Plot at least $10$ points corresponding to different pairs of these two types of error in your figure. The two end points of the plot should be: 1) the point with zero Type $1$ error; and 2) the point with zero Type $2$ error. Please save the figure with name \textbf{nbc.pdf}. ({\bf $1$ pt})
+
+        \end{enumerate}
+
+   \item Why do we need Laplace smoothing? Briefly explain what would go wrong if we do use the maximum likelihood estimators in the training process. ({\bf $0.5$ pt})
+    \begin{center}
+   \framebox{
+      \vbox{\vspace{20mm}
+    \hbox to 5.5in {}
+      \vspace{5.5mm}}
+   }
+   \end{center}
+
+\end{enumerate}
+
+
+\end{document}

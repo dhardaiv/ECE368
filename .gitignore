@@ -1,0 +1,14 @@
+# LaTeX build junk
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.xdv
+
+# VS Code settings (optional, keeps your personal settings out of the repo)
+.vscode/
