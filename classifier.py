@@ -173,6 +173,50 @@ if __name__ == '__main__':
     
     ### TODO: Write your code here to modify the decision rule such that
     ### Type 1 and Type 2 errors can be traded off, plot the trade-off curve
+
+    #part 2c: Plot the trade-off curve
+
+
+    # Difference Score for every file
+    test_files = util.get_files_in_folder(test_folder)
+    data = []
+    
+    for f in test_files:
+        # classify_result returns
+        pred_label, probs = classify_new_email(f, probabilities_by_category, priors_by_category)
+        
+        is_actual_spam = 'spam' in os.path.basename(f)
+        diff_score = probs[0] - probs[1] # log(P(S|x)) - log(P(H|x))
+        
+        data.append((is_actual_spam, diff_score))
+
+    #  Define thresholds (tau) that span the entire range of scores
+    # We add +/- 50 to ensure we capture the "0 error" endpoints
+    scores = [d[1] for d in data]
+    thresholds = np.linspace(min(scores) - 50, max(scores) + 50, 50)
+
+    t1_errors = []
+    t2_errors = []
+
+    # Sweep through thresholds and count errors in one line
+    for tau in thresholds:
+        # Type 1 (False Neg)
+        t1 = sum(1 for is_spam, score in data if is_spam and score <= tau)
+        
+        # Type 2 
+        t2 = sum(1 for is_spam, score in data if not is_spam and score > tau)
+        
+        t1_errors.append(t1)
+        t2_errors.append(t2)
+
+    # 4. Plot
+    plt.figure()
+    plt.plot(t1_errors, t2_errors, marker='o') # Connected dots
+    plt.xlabel('Type 1 Errors (False Negatives)')
+    plt.ylabel('Type 2 Errors (False Positives)')
+    plt.title('Trade-off Curve')
+    plt.grid(True)
+    plt.savefig('nbc.pdf')
    
 
  
