@@ -144,12 +144,21 @@ You can complete this lab in a group of two. Please provide the name and student
 
    \item Why do we need Laplace smoothing? Briefly explain what would go wrong if we do use the maximum likelihood estimators in the training process. ({\bf $0.5$ pt})
     \begin{center}
-   \framebox{
-      \vbox{\vspace{20mm}
-    \hbox to 5.5in {}
-      \vspace{5.5mm}}
-   }
-   \end{center}
+  \framebox{
+    \begin{minipage}{5.5in}
+      \vspace{0.2cm}
+      \textbf{The Problem with MLE:} Maximum Likelihood Estimation relies solely on observed counts. If a word $w$ never appears in the training data for a specific class $y$, the estimated probability is zero: $\hat{P}(w|y) = 0$.
+
+      \textbf{The Consequence:} The Naive Bayes classifier calculates the likelihood of an email by multiplying the probabilities of all its words:
+      \[ P(\mathbf{x}|y) = \prod_{d=1}^D P(x_d|y) \]
+      If even a single word has a probability of $0$, the entire product becomes $0$. This causes the classifier to strictly reject that class based on a single unseen word, ignoring all other evidence. Laplace smoothing prevents this by adding a count of 1, ensuring no probability is ever strictly zero.
+      \[
+      \hat{\theta}_{d} = \frac{N_{d} + 1}{N_{total} + D} > 0
+      \]
+      \vspace{0.1cm}
+    \end{minipage}
+  }
+\end{center}
 
 \end{enumerate}
 
