@@ -58,12 +58,32 @@ $\boldsymbol \Sigma_1$, and $\boldsymbol \Sigma_2$ as functions of the training
 data $\{\mathbf{x}_n, y_n\}, n=1,2,\ldots,N$. ({\bf $1$ pt})
 \begin{center}
    \framebox{
-      \vbox{\vspace{24mm}
-    \hbox to 5.5in {}
-      \vspace{30mm}}
+    \begin{minipage}{5.5in}
+   \vspace{4mm}
+   
+   \textbf{Class Means:} The ML estimates are simply the sample averages of the feature vectors for each respective class, filtered using the indicator function $I(\cdot)$.
+   \begin{align*}
+   \hat{\mu}_1 &= \frac{\sum_{n=1}^N I(y_n = 1) x_n}{\sum_{n=1}^N I(y_n = 1)}, \quad \hat{\mu}_2 = \frac{\sum_{n=1}^N I(y_n = 2) x_n}{\sum_{n=1}^N I(y_n = 2)}
+   \end{align*}
+   
+   \textbf{QDA Covariances:} For QDA, each class has its own distinct covariance matrix, calculated using only the squared deviations from that specific class.
+   \begin{align*}
+   \hat{\Sigma}_1 &= \frac{\sum_{n=1}^N I(y_n = 1) (x_n - \hat{\mu}_1)(x_n - \hat{\mu}_1)^T}{\sum_{n=1}^N I(y_n = 1)} \\[6pt]
+   \hat{\Sigma}_2 &= \frac{\sum_{n=1}^N I(y_n = 2) (x_n - \hat{\mu}_2)(x_n - \hat{\mu}_2)^T}{\sum_{n=1}^N I(y_n = 2)}
+   \end{align*}
+   
+   \textbf{LDA Shared Covariance:} For LDA, both classes share the exact same covariance matrix. This is calculated as the pooled sample covariance averaged across all $N$ samples.
+   \begin{align*}
+   \hat{\Sigma} &= \frac{1}{N} \sum_{n=1}^N \Big[ I(y_n = 1) (x_n - \hat{\mu}_1)(x_n - \hat{\mu}_1)^T \\
+   &\qquad\qquad\qquad + I(y_n = 2) (x_n - \hat{\mu}_2)(x_n - \hat{\mu}_2)^T \Big]
+   \end{align*}
+   
+   \vspace{2mm}
+   \end{minipage}
    }
    \end{center}
-
+   \newpage
+ \vspace{2mm}
 \item In the case of LDA, write down the decision boundary as a linear equation of
 $\mathbf{x}$ with parameters $\boldsymbol \mu_{1}$, $\boldsymbol \mu_{2}$, and $\boldsymbol \Sigma$. Note that we assume $\pi=0.5$. ({\bf $0.5$ pt})
 \begin{center}
