@@ -3,8 +3,8 @@ import numpy as np
 # Please only update the Student ID part.
 
 ############################CHANGE YOUR STUDENT ID###############################
-student1_number = 123456789  # Replace with the actual student number
-student2_number = 123465789  # Replace with the actual student number
+student1_number = 1010380892  # Replace with the actual student number (Bharat Bhargava)
+student2_number = 1010214260  # Replace with the actual student number (Daivik Dhar)
 np.random.seed((student1_number+student2_number)//1000)
 
 # Number of samples
