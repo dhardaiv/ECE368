@@ -122,19 +122,34 @@ $\mathbf{x}$ with parameters $\boldsymbol \mu_{1}$, $\boldsymbol \mu_{2}$, $\bol
 \item The misclassification rates are \framebox{\vbox{\vspace{3mm}\hbox to 16mm {\hfill 10.67\% \hfill}}} for LDA, and \framebox{\vbox{\vspace{3mm}\hbox to 16mm {\hfill 13.33\% \hfill}}} for QDA. ({\bf $1$ pt})
 \end{enumerate}
 
+\newpage
 
 \section{Bayesian Linear Regression}
 \begin{enumerate}
 \item Express posterior distribution $p(\mathbf{a}|z_1,\ldots,z_{N} ; x_1, \ldots, x_N)$ using $\sigma^2, \beta$, $x_1, z_1, x_2, z_2, \ldots, x_N, z_N$.
    ({\bf $1$ pt})
 
-      \begin{center}
-   \framebox{
-      \vbox{\vspace{25mm}
-    \hbox to 5.5in {}
-      \vspace{10mm}}
-   }
-   \end{center}
+   \begin{center}
+\framebox{
+   \begin{minipage}{5.5in}
+   \vspace{6mm}
+   
+   Let $\mathbf{z} = [z_1, \dots, z_N]^T$ be the target vector, and $\mathbf{X}$ be the $N \times 2$ augmented input matrix where each row is $[1, x_n]$. By Bayes' rule, the posterior distribution is proportional to the likelihood times the prior:
+   $$p(a | \mathbf{z}; \mathbf{x}) \propto p(\mathbf{z} | a; \mathbf{x}) p(a)$$
+   
+   Given the additive Gaussian noise $w \sim \mathcal{N}(0, \sigma^2 \mathbf{I})$, the likelihood is $p(\mathbf{z} | a; \mathbf{x}) = \mathcal{N}(\mathbf{X}a, \sigma^2 \mathbf{I})$. The prior is given as $p(a) = \mathcal{N}(0, \beta \mathbf{I})$. 
+   
+   Multiplying these two Gaussian distributions (by combining their exponents and completing the square) yields a new Multivariate Gaussian distribution for the posterior:
+   $$p(a | z_1, \dots, z_N; x_1, \dots, x_N) = \mathcal{N}(\boldsymbol{\mu}_N, \boldsymbol{\Sigma}_N)$$
+   
+   Where the posterior covariance $\boldsymbol{\Sigma}_N$ and mean $\boldsymbol{\mu}_N$ are defined as:
+   $$ \boldsymbol{\Sigma}_N = \left( \frac{1}{\beta} \mathbf{I} + \frac{1}{\sigma^2} \mathbf{X}^T \mathbf{X} \right)^{-1} $$
+   $$ \boldsymbol{\mu}_N = \frac{1}{\sigma^2} \boldsymbol{\Sigma}_N \mathbf{X}^T \mathbf{z} $$
+   
+   \vspace{6mm}
+   \end{minipage}
+}
+\end{center}
 \item Let $\sigma^2=0.1$ and $\beta=1$. Draw four contour plots corresponding to the distributions $p(\mathbf{a})$, $p(\mathbf{a}|z_1;x_1)$, $p(\mathbf{a}|z_1,\ldots, z_{5}; x_1 \ldots x_5)$, and $p(\mathbf{a}| z_1,\ldots,z_{100}; x_1 \ldots x_{100})$. In all contour plots, the x-axis represents $a_0$, and the y-axis represents $a_1$. Please save the figures with names \textbf{prior.pdf, posterior1.pdf, posterior5.pdf, posterior100.pdf}, respectively. ({\bf $1.5$ pt})
 
 \item Suppose that there is a new input $x$, for which we want to predict the corresponding target value $z$. Write down the distribution of the prediction $z$, i.e, $p(z|z_1,\ldots,z_N ; x, x_1, \ldots x_N)$. ({\bf $1$ pt})
