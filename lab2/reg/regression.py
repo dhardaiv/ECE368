@@ -133,15 +133,14 @@ def predictionDistribution(x,beta,sigma2,mu,Cov,x_train,z_train):
     means = np.array(means)
     stds = np.array(stds)
     
-    
     plt.figure()
-    plt.scatter(x_train, z_train, c='black', marker='o', label='Training Data')
     
-    # Plot 
-    plt.plot(x, means, 'r-', linewidth=2, label='Mean Prediction')
+    #  Plot the mean prediction line AND the error bars 
     plt.errorbar(x, means, yerr=stds, fmt='r-', ecolor='red', elinewidth=1, capsize=3, label='Prediction \u00b1 1 std')
     
-    plt.scatter(x_train, z_train, c='blue', marker='o', s=40, label='Training Data', zorder=5)
+    # 3. Plot the training data 
+    plt.scatter(x_train.flatten(), z_train.flatten(), c='blue', marker='o', s=50, label='Training Data', zorder=10)
+    
     plt.xlim([-4, 4])
     plt.ylim([-4, 4])
     plt.xlabel('Input x')
@@ -166,7 +165,7 @@ if __name__ == '__main__':
     beta = 1
     
     # number of training samples used to compute posterior
-    ns  = 5
+    ns  = 100
     
     # used samples
     x = x_train[0:ns]
