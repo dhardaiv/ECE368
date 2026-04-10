@@ -8,8 +8,6 @@
 \setlength{\parindent}{0 in}
 \setlength{\parskip}{0.1 in}
 
-%\usepackage{amsmath}
-%\usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage[tbtags]{amsmath}
@@ -25,21 +23,23 @@
 \begin{center}
 \begin{spacing}{1.75}
 {\Large { ECE368: Probabilistic Reasoning} \\
-	{Lab 3: Hidden Markov Model}}
+   {Lab 3: Hidden Markov Model}}
 \end{spacing}
 \vspace{-1em}
 \end{center}
-%\vspace{-11mm}
+
 You can complete this lab in a group of two. Please provide the name and student number of both members.
 \begin{center}
-   \framebox{
-      \vbox{\vspace{3mm}
-    \hbox to 6.28in { {\bf Name:
-	\centerline{Student Number:}} }\\[5mm]
-    \hbox to 6.28in { {\bf Name:
-	\centerline{Student Number:}} }
-      \vspace{3mm}}}
-   \end{center}
+      \framebox{%
+      \vbox{%
+         \vskip 3mm
+         \hbox to 6.28in{\rlap{\bf Name: Bharat Bhargava}\hfil{\bf Student Number: 1010380892}\hfil}
+         \vskip 5mm
+         \hbox to 6.28in{\rlap{\bf Name: Daivik Dhar}\hfil{\bf Student Number: 1010214260}\hfil}
+         \vskip 3mm
+      }%
+   }
+\end{center}
 {\bf You should hand in:} 1) A scanned \textsf{.pdf} version of this sheet with your answers (file size
 should be under $2$ MB); 2) one Python file \textsf{inference.py} that
 contains your code. The files should be uploaded to Quercus.
@@ -49,22 +49,46 @@ contains your code. The files should be uploaded to Quercus.
 \item
 \begin{enumerate}
 \item  Write down the formulas of the forward-backward algorithm to compute the marginal distribution $p(\mathbf{z}_i|(\hat{x}_0,\hat{y}_0),\ldots,(\hat{x}_{N-1},\hat{y}_{N-1}))$ for $i=0,1,\ldots,N-1$. Your answer should contain the initializations of the forward and backward messages, the recursion relations of the messages, and the computation of the marginal distribution based on the messages. ({\bf $0.5$ pt})
-     \begin{center}
-   \framebox{
-      \vbox{\vspace{40mm}
-    \hbox to 5.5in {}
-      \vspace{30mm}}
-   }
-   \end{center}
+\begin{center}
+\framebox{
+   \begin{minipage}{5.5in}
+   \vspace{6mm}
+   Let $o_k = (\hat{x}_k, \hat{y}_k)$ denote the observation at time step $k$.
+   
+   \textbf{1. Forward Messages} ($\alpha_i(z_i) = p(o_0, \dots, o_i, z_i)$) \\
+   Initialization ($i=0$): $\alpha_0(z_0) = p(z_0) p(o_0 | z_0)$ \\
+   Recursion ($i \ge 1$): $\alpha_i(z_i) = p(o_i | z_i) \sum_{z_{i-1}} \alpha_{i-1}(z_{i-1}) p(z_i | z_{i-1})$
+   
+   \vspace{3mm}
+   \textbf{2. Backward Messages} ($\beta_i(z_i) = p(o_{i+1}, \dots, o_{N-1} | z_i)$) \\
+   Initialization ($i=N-1$): $\beta_{N-1}(z_{N-1}) = 1$ \\
+   Recursion ($i < N-1$): $\beta_i(z_i) = \sum_{z_{i+1}} \beta_{i+1}(z_{i+1}) p(z_{i+1} | z_i) p(o_{i+1} | z_{i+1})$
+   
+   \vspace{3mm}
+   \textbf{3. Marginal Distribution} ($\gamma_i(z_i) = p(z_i | o_0, \dots, o_{N-1})$) \\
+   The marginal distribution is the normalized product of the forward and backward messages:
+   \begin{equation*}
+   p(z_i | o_0, \dots, o_{N-1}) = \frac{\alpha_i(z_i) \beta_i(z_i)}{\sum_{z_i} \alpha_i(z_i) \beta_i(z_i)}
+   \end{equation*}
+   \vspace{6mm}
+   \end{minipage}
+}
+\end{center}
 
    \item After you run the forward-backward algorithm on the data in \textsf{test.txt}, write down the obtained marginal distribution of the state at $i=99$ (the last time step), i.e., $p(\mathbf{z}_{99}|(\hat{x}_0,\hat{y}_0),\ldots,(\hat{x}_{99},\hat{y}_{99}))$. Only include states with non-zero probability in your answer.
    ({\bf $1$ pt})
 
       \begin{center}
    \framebox{
-      \vbox{\vspace{25mm}
-    \hbox to 5.5in {}
-      \vspace{10mm}}
+      \begin{minipage}{5.5in}
+      \vspace{4mm}
+      \begin{center}
+      State $(11, 0, \text{`stay'})$ with probability $0.8103$ \\
+      State $(11, 0, \text{`right'})$ with probability $0.1796$ \\
+      State $(10, 1, \text{`down'})$ with probability $0.0101$
+      \end{center}
+      \vspace{4mm}
+      \end{minipage}
    }
    \end{center}
 \end{enumerate}
@@ -72,9 +96,15 @@ contains your code. The files should be uploaded to Quercus.
 \item Modify your forward-backward algorithm so that it can handle missing observations. After you run the modified forward-backward algorithm on the data in \textsf{test\_missing.txt}, write down the obtained marginal distribution of the state at $i=30$, i.e., $p(\mathbf{z}_{30}|(\hat{x}_0,\hat{y}_0),\ldots,(\hat{x}_{99},\hat{y}_{99}))$. Only include states with non-zero probability in your answer. ({\bf $0.5$ pt})
     \begin{center}
    \framebox{
-      \vbox{\vspace{20mm}
-    \hbox to 5.5in {}
-      \vspace{10mm}}
+      \begin{minipage}{5.5in}
+      \vspace{4mm}
+      \begin{center}
+      State $(6, 7, \text{`right'})$ with probability $0.9130$ \\
+      State $(5, 7, \text{`right'})$ with probability $0.0435$ \\
+      State $(5, 7, \text{`stay'})$ with probability $0.0435$
+      \end{center}
+      \vspace{4mm}
+      \end{minipage}
    }
    \end{center}
 
@@ -83,30 +113,61 @@ contains your code. The files should be uploaded to Quercus.
 \item Write down the formulas of the Viterbi algorithm using $\mathbf{z}_i$ and $(\hat{x}_i,\hat{y}_i), i=0,1,\ldots,N-1$. Your answer should contain the initialization of the messages and the recursion of the messages in the Viterbi algorithm. ({\bf $0.5$ pt})
     \begin{center}
    \framebox{
-      \vbox{\vspace{40mm}
-    \hbox to 5.5in {}
-      \vspace{10mm}}
+      \begin{minipage}{5.5in}
+      \vspace{4mm}
+      Let $o_k = (\hat{x}_k, \hat{y}_k)$ denote the observation at time step $k$. Let $\omega_i(z_i)$ be the maximum probability of a state sequence ending at state $z_i$, and $\psi_i(z_i)$ be the backpointer.
+   
+      \textbf{1. Initialization} ($i=0$): \\
+      $\omega_0(z_0) = p(z_0) p(o_0 | z_0)$ \\
+      $\psi_0(z_0) = \text{None}$
+   
+      \vspace{2mm}
+      \textbf{2. Recursion} ($i = 1, \dots, N-1$): \\
+      $\omega_i(z_i) = p(o_i | z_i) \max_{z_{i-1}} \left[ \omega_{i-1}(z_{i-1}) p(z_i | z_{i-1}) \right]$ \\
+      $\psi_i(z_i) = \arg\max_{z_{i-1}} \left[ \omega_{i-1}(z_{i-1}) p(z_i | z_{i-1}) \right]$
+   
+      \vspace{2mm}
+      \textbf{3. Termination \& Backtracking}: \\
+      $z^*_{N-1} = \arg\max_{z_{N-1}} \omega_{N-1}(z_{N-1})$ \\
+      For $i = N-1, N-2, \dots, 1$: $z^*_{i-1} = \psi_i(z^*_i)$
+      \vspace{4mm}
+      \end{minipage}
    }
    \end{center}
 
  \item After you run the Viterbi algorithm on the data in \textsf{test\_missing.txt}, write down the last $10$ hidden states of the most likely sequence (i.e., $i=90, 91, 92,\ldots, 99$) based on the MAP estimate. ({\bf $1.5$ pt})
      \begin{center}
    \framebox{
-      \vbox{\vspace{30mm}
-    \hbox to 5.5in {}
-      \vspace{45mm}}
+      \begin{minipage}{5.5in}
+      \vspace{4mm}
+      \begin{center}
+      \begin{tabular}{ll}
+      $i=90$: $(11, 5, \text{`down'})$ & $i=95$: $(10, 7, \text{`left'})$ \\
+      $i=91$: $(11, 6, \text{`down'})$ & $i=96$: $(9, 7, \text{`left'})$ \\
+      $i=92$: $(11, 7, \text{`down'})$ & $i=97$: $(8, 7, \text{`left'})$ \\
+      $i=93$: $(11, 7, \text{`stay'})$ & $i=98$: $(7, 7, \text{`left'})$ \\
+      $i=94$: $(11, 7, \text{`stay'})$ & $i=99$: $(6, 7, \text{`left'})$
+      \end{tabular}
+      \end{center}
+      \vspace{4mm}
+      \end{minipage}
    }
    \end{center}
 
 \end{enumerate}
 
-\item Compute and compare the error probabilities of $\{\tilde{\mathbf{z}}_i\}$ and $\{\check{\mathbf{z}}_i\}$ using the data in \textsf{test\_missing.txt}.  The error probability of $\{\tilde{\mathbf{z}}_i\}$ is \framebox{\vbox{\vspace{4mm}\hbox to 14mm {}}}. The error probability of $\{\check{\mathbf{z}}_i\}$ is \framebox{\vbox{\vspace{4mm}\hbox to 14mm {}}}. ({\bf $0.5$ pt})
-\item Is sequence $\{\check{\mathbf{z}}_i\}$ a valid sequence? If not, please find a small segment $\check{\mathbf{z}}_i,\check{\mathbf{z}}_{i+1}$ that violates the transition model for some time step $i$. You answer should specify the value of $i$ as well as the corresponding states $\check{\mathbf{z}}_i,\check{\mathbf{z}}_{i+1}$. ({\bf $0.5$ pt})
+\item Compute and compare the error probabilities of $\{\tilde{\mathbf{z}}_i\}$ and $\{\check{\mathbf{z}}_i\}$ using the data in \textsf{test\_missing.txt}.  The error probability of $\{\tilde{\mathbf{z}}_i\}$ is \framebox{\vbox{\vspace{1mm}\hbox to 14mm {\centering 0.02}}}. The error probability of $\{\check{\mathbf{z}}_i\}$ is \framebox{\vbox{\vspace{1mm}\hbox to 14mm {\centering 0.03}}}. ({\bf $0.5$ pt})
+
+\item Is sequence $\{\tilde{\mathbf{z}}_i\}$ a valid sequence? If not, please find a small segment $\tilde{\mathbf{z}}_i,\tilde{\mathbf{z}}_{i+1}$ that violates the transition model for some time step $i$. You answer should specify the value of $i$ as well as the corresponding states $\tilde{\mathbf{z}}_i,\tilde{\mathbf{z}}_{i+1}$. ({\bf $0.5$ pt})
      \begin{center}
    \framebox{
-      \vbox{\vspace{20mm}
-    \hbox to 5.5in {}
-      \vspace{10mm}}
+      \begin{minipage}{5.5in}
+      \vspace{6mm}
+      No, the sequence is not valid. 
+      
+      At $i = 64$, there is an invalid transition from $\tilde{\mathbf{z}}_{64} = (3, 7, \text{`stay'})$ to $\tilde{\mathbf{z}}_{65} = (2, 7, \text{`stay'})$ because the probability of making this specific transition is 0. 
+      \vspace{6mm}
+      \end{minipage}
    }
    \end{center}
 \end{enumerate}
